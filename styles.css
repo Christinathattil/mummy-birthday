@@ -80,3 +80,40 @@ html {
   transform: translateY(0);
 }
 
+/* Wish Wall Creative Background */
+.wish-wall-bg {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  position: relative;
+  overflow: hidden;
+}
+.wish-wall-bg::before {
+  content: '💝 🎂 🎉 🎈 ✨ 🎁 💐 🌟';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 2rem;
+  opacity: 0.1;
+  white-space: nowrap;
+  animation: scrollEmojis 20s linear infinite;
+}
+@keyframes scrollEmojis {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Magic Ball Shake */
+@keyframes shake {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: rotate(-5deg); }
+  20%, 40%, 60%, 80% { transform: rotate(5deg); }
+}
+.shake {
+  animation: shake 0.5s;
+}
+
+/* Q3 floating option */
+#correctOption {
+  transition: all 0.3s ease;
+}
+

@@ -12,19 +12,53 @@ function burstConfetti() {
   });
 }
 
+// ====== Visitor Counter ======
+function incrementVisitors() {
+  let count = parseInt(localStorage.getItem('visitorCount') || '0');
+  count++;
+  localStorage.setItem('visitorCount', count);
+  return count;
+}
+function getVisitorCount() {
+  return parseInt(localStorage.getItem('visitorCount') || '0');
+}
+
 // ====== Hero ======
+const visitorCountEl = $('#visitorCount');
+let hasClicked = sessionStorage.getItem('hasClickedStart');
+if (!hasClicked) {
+  visitorCountEl.textContent = `${getVisitorCount()} ${getVisitorCount() === 1 ? 'person has' : 'people have'} wished Mummy today 🤩`;
+} else {
+  visitorCountEl.textContent = `${getVisitorCount()} ${getVisitorCount() === 1 ? 'person has' : 'people have'} wished Mummy today 🤩`;
+}
+
 $('#startButton').addEventListener('click', () => {
+  if (!sessionStorage.getItem('hasClickedStart')) {
+    const count = incrementVisitors();
+    visitorCountEl.textContent = `${count} ${count === 1 ? 'person has' : 'people have'} wished Mummy today 🤩`;
+    sessionStorage.setItem('hasClickedStart', 'true');
+  }
   burstConfetti();
   document.getElementById('wishSection').scrollIntoView({ behavior: 'smooth' });
 });
 
 // ====== Wish Carousel ======
-const wishes = [
-  { text: 'Wishing you decades of laughter!', name: 'Anita' },
-  { text: 'Sixty & sassy—stay that way!', name: 'Raj' },
-  { text: 'May your coffee be strong & naps long.', name: '' },
-  { text: 'To more adventures and cake! 🍰', name: 'Alex' },
-];
+function loadWishes() {
+  const stored = localStorage.getItem('wishes');
+  if (stored) {
+    return JSON.parse(stored);
+  }
+  return [
+    { text: 'Wishing you decades of laughter!', name: 'Anita' },
+    { text: 'Sixty & sassy—stay that way!', name: 'Raj' },
+    { text: 'May your coffee be strong & naps long.', name: '' },
+    { text: 'To more adventures and cake! 🍰', name: 'Alex' },
+  ];
+}
+function saveWishes() {
+  localStorage.setItem('wishes', JSON.stringify(wishes));
+}
+const wishes = loadWishes();
 let currentWishIndex = 0;
 const wishDisplay = $('#wishCarousel');
 const wishCountEl = $('#wishCount');
@@ -60,6 +94,7 @@ $('#submitWish').addEventListener('click', () => {
   if (!text) return;
   const name = $('#nameInput').value.trim();
   wishes.push({ text, name });
+  saveWishes();
   updateWishCount();
   currentWishIndex = wishes.length - 1;
   renderWish();
@@ -71,7 +106,36 @@ $('#submitWish').addEventListener('click', () => {
 });
 
 // ====== Quiz ======
-const answerKey = { q1: 'A', q2: 'A', q3: 'A' };
+const answerKey = { q1: 'A', q2: 'C', q3: 'C' };
+
+// Q3 interactive - float correct option near wrong attempts
+const wrongOptions = $$('.option-label[data-value="A"], .option-label[data-value="B"], .option-label[data-value="D"]');
+const correctOpt = $('#correctOption');
+wrongOptions.forEach(opt => {
+  opt.addEventListener('click', (e) => {
+    e.preventDefault();
+    const rect = opt.getBoundingClientRect();
+    correctOpt.style.position = 'fixed';
+    correctOpt.style.left = rect.left + 'px';
+    correctOpt.style.top = (rect.top - 60) + 'px';
+    correctOpt.style.zIndex = '100';
+    correctOpt.style.background = '#fef08a';
+    correctOpt.style.padding = '8px';
+    correctOpt.style.borderRadius = '8px';
+    correctOpt.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+    setTimeout(() => {
+      correctOpt.style.position = '';
+      correctOpt.style.left = '';
+      correctOpt.style.top = '';
+      correctOpt.style.zIndex = '';
+      correctOpt.style.background = '';
+      correctOpt.style.padding = '';
+      correctOpt.style.borderRadius = '';
+      correctOpt.style.boxShadow = '';
+    }, 2000);
+  });
+});
+
 $('#submitQuiz').addEventListener('click', () => {
   const form = new FormData($('#quizForm'));
   let score = 0;
@@ -79,45 +143,80 @@ $('#submitQuiz').addEventListener('click', () => {
     if (form.get(q) === answerKey[q]) score++;
   });
   const result = $('#quizResult');
-  result.textContent = score === 3 ? 'Perfect! You\'re an Official Mom Expert 🏅' : `You got ${score}/3! Still pretty nifty.`;
+  if (score === 3) {
+    result.textContent = 'Perfect! You\'re an Official Mom Expert 🏅';
+  } else if (form.get('q3') !== 'C') {
+    result.textContent = `Nice try! But we all know the 3rd child is the favourite 😉 Score: ${score}/3`;
+  } else {
+    result.textContent = `You got ${score}/3! Still pretty nifty.`;
+  }
   result.classList.remove('hidden');
   burstConfetti();
 });
 
-// ====== Gift Box Joke ======
-const jokes = [
-  'Turning 60 means never having to ask "Are we there yet?"—you\'ve arrived!',
-  '60 is just 21 in Celsius.',
-  'At 60, your warranty has officially expired—enjoy the freedom!',
+// ====== Magic 8-Ball ======
+const oracleAnswers = [
+  'Mom says: More cake is always the answer!',
+  'The oracle predicts: Unlimited naps in your future!',
+  'Mom\'s wisdom: Age is just a number, cake is forever.',
+  'Signs point to: Another embarrassing story incoming!',
+  'Outlook good: You\'ll get the best hugs today!',
+  'Reply hazy: Ask again after coffee.',
+  'Mom says: Stop asking and just eat the cake!',
+  'The stars align: Dance like nobody\'s watching!',
 ];
-let jokeShown = false;
-$('#giftBox').addEventListener('touchstart', revealJoke, { passive: true });
-$('#giftBox').addEventListener('click', revealJoke);
-function revealJoke() {
-  if (jokeShown) return;
-  const joke = jokes[Math.floor(Math.random() * jokes.length)];
-  $('#jokeText').textContent = joke;
-  $('#jokeText').classList.remove('hidden');
-  $('#giftBox').textContent = '🎉';
-  jokeShown = true;
+const magicBall = $('#magicBall');
+const ballAnswer = $('#ballAnswer');
+const oracleText = $('#oracleText');
+let isShaking = false;
+
+function revealOracle() {
+  if (isShaking) return;
+  isShaking = true;
+  magicBall.classList.add('shake');
+  ballAnswer.textContent = '...';
+  oracleText.textContent = '';
+  
+  setTimeout(() => {
+    const answer = oracleAnswers[Math.floor(Math.random() * oracleAnswers.length)];
+    ballAnswer.textContent = '✨';
+    oracleText.textContent = answer;
+    magicBall.classList.remove('shake');
+    burstConfetti();
+    isShaking = false;
+  }, 800);
+}
+
+magicBall.addEventListener('click', revealOracle);
+
+// Shake detection for mobile
+if (window.DeviceMotionEvent) {
+  let lastShake = 0;
+  window.addEventListener('devicemotion', (e) => {
+    const acc = e.accelerationIncludingGravity;
+    const threshold = 15;
+    const now = Date.now();
+    if (now - lastShake < 1000) return;
+    if (Math.abs(acc.x) > threshold || Math.abs(acc.y) > threshold || Math.abs(acc.z) > threshold) {
+      lastShake = now;
+      revealOracle();
+    }
+  });
 }
 
 // ====== Memory Flip Cards ======
-$$('.flip-card').forEach((card) => {
-  card.addEventListener('click', () => {
-    card.classList.toggle('flipped');
+setTimeout(() => {
+  $$('.flip-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('flipped');
+    });
   });
-});
+}, 100);
 
 // ====== Countdown ======
 const countdownEl = $('#countdown');
-// Set target: next birthday at midnight local time (adjust if already past)
-const now = new Date();
-let target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
-// If already past bedtime, maybe next day; but realistically, customize date below
-if (target - now < 0) {
-  target.setDate(target.getDate() + 1);
-}
+// Birthday: February 21, 2026 at midnight
+const target = new Date(2026, 1, 21, 0, 0, 0);
 function updateCountdown() {
   const diff = target - new Date();
   if (diff <= 0) {

@@ -10,6 +10,8 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 </head>
 <body class="bg-pink-50 text-gray-800 overflow-x-hidden">
+  <!-- Floating balloons container -->
+  <div id="balloonContainer" class="pointer-events-none fixed inset-0 overflow-hidden"></div>
   <!-- Hero -->
   <section id="hero" class="relative flex flex-col items-center justify-center min-h-screen text-center px-4">
     <img src="assets/images/mom.jpeg" alt="Birthday portrait" class="w-48 h-48 object-cover rounded-full shadow-lg mb-6">
@@ -104,6 +106,9 @@
 
   <!-- Audio -->
   <audio id="birthdayAudio" src="assets/audio/happy_birthday.mp3"></audio>
+
+  <!-- Toast joke -->
+  <div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-yellow-300 text-black px-4 py-2 rounded-full shadow-lg opacity-0 pointer-events-none transition transform translate-y-10"></div>
 
   <script src="script.js" defer></script>
 </body>

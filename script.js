@@ -133,6 +133,60 @@ function updateCountdown() {
 }
 updateCountdown();
 
+// ====== Balloons ======
+const balloonContainer = $('#balloonContainer');
+function createBalloon() {
+  const b = document.createElement('div');
+  b.className = 'balloon';
+  // Random pastel color
+  const hue = Math.floor(Math.random() * 360);
+  b.style.setProperty('--balloon-color', `hsl(${hue} 70% 80%)`);
+  // Random horizontal drift
+  const startX = Math.random() * window.innerWidth - window.innerWidth / 2;
+  const endX = startX + (Math.random() * 100 - 50);
+  b.style.setProperty('--startX', `${startX}px`);
+  b.style.setProperty('--endX', `${endX}px`);
+  // Duration 6–12s
+  const dur = 6 + Math.random() * 6;
+  b.style.setProperty('--duration', `${dur}s`);
+  // Remove when animation ends
+  b.addEventListener('animationend', () => b.remove());
+  // Pop on click
+  b.addEventListener('click', (e) => {
+    e.stopPropagation();
+    burstConfetti();
+    b.remove();
+  });
+  balloonContainer.appendChild(b);
+}
+// spawn balloons every 1.5s
+setInterval(createBalloon, 1500);
+
+// ====== Toast jokes ======
+const toastEl = $('#toast');
+function showToast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  setTimeout(() => toastEl.classList.remove('show'), 3000);
+}
+const extraJokes = [
+  'Cake calories don\'t count today!',
+  'Age is merely the number of years the world has enjoyed you!',
+  'Free refills on wisdom at 60!',
+];
+let toastIndex = 0;
+setInterval(() => {
+  showToast(extraJokes[toastIndex]);
+  toastIndex = (toastIndex + 1) % extraJokes.length;
+}, 20000);
+
+// ====== Body tap confetti ======
+document.body.addEventListener('click', (e) => {
+  // avoid double fire when interacting with buttons where own handlers already call confetti
+  if (e.target.closest('button')) return;
+  burstConfetti();
+});
+
 // ====== Native Share ======
 $('#shareButton').addEventListener('click', async () => {
   if (navigator.share) {

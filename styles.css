@@ -48,3 +48,35 @@ html {
   pointer-events: none;
   z-index: 50;
 }
+
+/* Balloon */
+.balloon {
+  position: absolute;
+  width: 40px;
+  height: 55px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: var(--balloon-color, pink);
+  animation: floatUp linear var(--duration, 8s);
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+}
+.balloon::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -12px;
+  width: 2px;
+  height: 12px;
+  background: #aaa;
+  transform: translateX(-50%);
+}
+@keyframes floatUp {
+  from { transform: translateY(100vh) translateX(var(--startX)); opacity:0; }
+  to { transform: translateY(-120px) translateX(var(--endX)); opacity:1; }
+}
+
+/* Toast */
+#toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+

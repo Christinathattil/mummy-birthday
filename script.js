@@ -113,44 +113,80 @@ const childCards = $$('.child-card');
 const thirdCard = $('#thirdChildCard');
 const q3Message = $('#q3Message');
 let cardAttempts = 0;
+let q3Selected = false;
 
 childCards.forEach(card => {
   card.addEventListener('click', (e) => {
+    if (q3Selected) return; // Already selected
+    
     const childNum = card.getAttribute('data-child');
     
     if (childNum === '3') {
       // Correct choice - highlight and celebrate
+      q3Selected = true;
       thirdCard.classList.add('selected-card');
+      thirdCard.classList.remove('pulse-glow');
       q3Message.textContent = '🎉 Of course! Everyone knows the 3rd child is the favourite!';
       q3Message.classList.remove('hidden');
+      q3Message.style.color = '#16a34a';
       burstConfetti();
+      
+      // Lock all other cards visually
+      childCards.forEach(c => {
+        if (c !== thirdCard) {
+          c.style.opacity = '0.5';
+          c.style.pointerEvents = 'none';
+        }
+      });
     } else {
-      // Wrong choice - card shakes and refuses, then 3rd card glows
+      // Wrong choice - dramatic rejection
       cardAttempts++;
       const cardInner = card.querySelector('.card-inner');
-      cardInner.style.animation = 'shake 0.5s';
+      
+      // Shake animation
+      cardInner.style.animation = 'shake 0.5s, rejectPulse 0.5s';
+      
+      // Add red flash
+      const originalBg = cardInner.style.background;
+      cardInner.style.background = 'linear-gradient(135deg, #fca5a5 0%, #ef4444 100%)';
       
       setTimeout(() => {
         cardInner.style.animation = '';
+        cardInner.style.background = originalBg;
       }, 500);
       
-      // Make 3rd card pulse and glow
+      // Make 3rd card pulse and glow more intensely
       thirdCard.classList.add('pulse-glow');
       
+      // Progressive hints
       if (cardAttempts === 1) {
-        q3Message.textContent = '😅 Nice try! But that card won\'t budge...';
+        q3Message.textContent = '❌ Nope! That card is LOCKED. Try the golden one!';
+        q3Message.style.color = '#dc2626';
       } else if (cardAttempts === 2) {
-        q3Message.textContent = '😉 The answer is glowing right in front of you!';
+        q3Message.textContent = '� The answer is literally GLOWING! Tap the star card!';
+        q3Message.style.color = '#ea580c';
+        // Make wrong cards semi-transparent
+        childCards.forEach(c => {
+          if (c.getAttribute('data-child') !== '3') {
+            c.style.opacity = '0.4';
+          }
+        });
       } else {
-        q3Message.textContent = '😂 Just tap the golden card already!';
+        q3Message.textContent = '😂 Fine, I\'ll help you... *pointing at the 3rd child card*';
+        q3Message.style.color = '#ca8a04';
+        // Bounce the correct card
+        thirdCard.style.animation = 'bounce 1s infinite';
       }
       q3Message.classList.remove('hidden');
       
-      // Auto-select 3rd card after 3 wrong attempts
-      if (cardAttempts >= 3) {
+      // Auto-select 3rd card after 4 wrong attempts
+      if (cardAttempts >= 4) {
         setTimeout(() => {
-          thirdCard.click();
-        }, 1500);
+          q3Message.textContent = '🤦 Okay, I\'m selecting it FOR you...';
+          setTimeout(() => {
+            thirdCard.click();
+          }, 1000);
+        }, 1000);
       }
     }
   });
@@ -287,9 +323,12 @@ function showToast(msg) {
   setTimeout(() => toastEl.classList.remove('show'), 3000);
 }
 const extraJokes = [
-  'Cake calories don\'t count today!',
-  'Age is merely the number of years the world has enjoyed you!',
-  'Free refills on wisdom at 60!',
+  '🕷️ Spiderman says: "With great age comes great wisdom!"',
+  '🐭 Jerry whispers: "Outsmart time like I outsmart Tom!"',
+  '🐱 Tom meows: "60 years of chasing dreams? Purrfect!"',
+  '🕸️ Spiderman swings by: "You\'re never too old to be amazing!"',
+  '🧀 Jerry squeaks: "Age is just cheddar getting better!"',
+  '🐾 Tom purrs: "Nine lives? You\'re on your best one yet!"',
 ];
 let toastIndex = 0;
 setInterval(() => {

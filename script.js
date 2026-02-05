@@ -13,7 +13,7 @@ function burstConfetti() {
 }
 
 // ====== Visitor Counter via backend ======
-const BACKEND_URL = "https://YOUR_BACKEND_URL"; // replace when deployed
+const BACKEND_URL = "http://127.0.0.1:5050";
 async function fetchCount() {
   try {
     const res = await fetch(`${BACKEND_URL}/count`);
@@ -62,23 +62,19 @@ $('#startButton').addEventListener('click', async () => {
   document.getElementById('wishSection').scrollIntoView({ behavior: 'smooth' });
 });
 
-// ====== Wish Carousel ======
-function loadWishes() {
-  const stored = localStorage.getItem('wishes');
-  if (stored) {
-    return JSON.parse(stored);
+// ====== Wish Carousel via backend ======
+let wishes = [];
+async function fetchWishes() {
+  try {
+    const res = await fetch(`${BACKEND_URL}/wishes`);
+    wishes = await res.json();
+    currentWishIndex = 0;
+    renderWish();
+  } catch (e) {
+    console.error('Failed to fetch wishes', e);
   }
-  return [
-    { text: 'Here’s to many more laughs, memories, and silly moments together.', name: 'Joji' },
-    { text: 'Sixty looks good on you — keep doing you, always!', name: 'Smitha' },
-    { text: 'Life full aayitt enjoy cheyyu, health um happiness um always koode irikkatte.', name: '' },
-    { text: 'Cake kazhichu, travel poyi, stories paranju, pinne repeat — retirement agenda ready alle 😄', name: 'Laaly' },
-  ];
 }
-function saveWishes() {
-  localStorage.setItem('wishes', JSON.stringify(wishes));
-}
-const wishes = loadWishes();
+fetchWishes();
 let currentWishIndex = 0;
 const wishDisplay = $('#wishCarousel');
 const wishCountEl = $('#wishCount');
@@ -109,13 +105,23 @@ $('#addWishBtn').addEventListener('click', () => {
 });
 
 // Submit wish
-$('#submitWish').addEventListener('click', () => {
+$('#submitWish').addEventListener('click', async () => {
   const text = $('#wishInput').value.trim();
   if (!text) return;
   const name = $('#nameInput').value.trim();
-  wishes.push({ text, name });
-  saveWishes();
-  updateWishCount();
+  try {
+    const res = await fetch(`${BACKEND_URL}/wishes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, name }),
+    });
+    const saved = await res.json();
+    wishes.push(saved);
+  } catch (e) {
+    console.error('Wish submit failed', e);
+    return;
+  }
+    updateWishCount();
   currentWishIndex = wishes.length - 1;
   renderWish();
   // reset form

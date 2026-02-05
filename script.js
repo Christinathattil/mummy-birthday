@@ -13,7 +13,7 @@ function burstConfetti() {
 }
 
 // ====== Visitor Counter via backend ======
-const BACKEND_URL = "http://127.0.0.1:5050";
+const BACKEND_URL = "https://mummy-birthday.onrender.com";
 async function fetchCount() {
   try {
     const res = await fetch(`${BACKEND_URL}/count`);

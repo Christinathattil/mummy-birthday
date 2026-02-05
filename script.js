@@ -12,35 +12,48 @@ function burstConfetti() {
   });
 }
 
-// ====== Visitor Counter ======
-function incrementVisitors() {
-  let count = parseInt(localStorage.getItem('visitorCount') || '0');
-  count++;
-  localStorage.setItem('visitorCount', count);
-  return count;
+// ====== Visitor Counter via backend ======
+const BACKEND_URL = "https://YOUR_BACKEND_URL"; // replace when deployed
+async function fetchCount() {
+  try {
+    const res = await fetch(`${BACKEND_URL}/count`);
+    const { count } = await res.json();
+    return count;
+  } catch (e) {
+    console.error("Count fetch failed, fallback to 0", e);
+    return 0;
+  }
 }
-function getVisitorCount() {
-  return parseInt(localStorage.getItem('visitorCount') || '0');
+async function incrementVisitors() {
+  try {
+    const res = await fetch(`${BACKEND_URL}/increment`, { method: "POST" });
+    const { count } = await res.json();
+    return count;
+  } catch (e) {
+    console.error("Increment failed", e);
+    return null;
+  }
 }
 
 // ====== Hero ======
 const visitorCountEl = $('#visitorCount');
+(async () => {
+  const cnt = await fetchCount();
+  visitorCountEl.textContent = `${cnt} ${cnt === 1 ? "person has" : "people have"} wished Mummy today 🤩`;
+})();
 let hasClicked = sessionStorage.getItem('hasClickedStart');
-if (!hasClicked) {
-  visitorCountEl.textContent = `${getVisitorCount()} ${getVisitorCount() === 1 ? 'person has' : 'people have'} wished Mummy today 🤩`;
-} else {
-  visitorCountEl.textContent = `${getVisitorCount()} ${getVisitorCount() === 1 ? 'person has' : 'people have'} wished Mummy today 🤩`;
-}
 
 // Background audio
 const bgAudio = $('#birthdayAudio');
 bgAudio.loop = true;
 bgAudio.volume = 0.3;
 
-$('#startButton').addEventListener('click', () => {
+$('#startButton').addEventListener('click', async () => {
   if (!sessionStorage.getItem('hasClickedStart')) {
-    const count = incrementVisitors();
-    visitorCountEl.textContent = `${count} ${count === 1 ? 'person has' : 'people have'} wished Mummy today 🤩`;
+    const count = await incrementVisitors();
+    if (count !== null) {
+      visitorCountEl.textContent = `${count} ${count === 1 ? 'person has' : 'people have'} wished Mummy today 🤩`;
+    }
     sessionStorage.setItem('hasClickedStart', 'true');
   }
   // Play background music on user interaction

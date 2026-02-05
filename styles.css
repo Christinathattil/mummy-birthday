@@ -112,8 +112,144 @@ html {
   animation: shake 0.5s;
 }
 
-/* Q3 floating option */
-#correctOption {
+/* Q3 Card styles */
+.child-card {
   transition: all 0.3s ease;
+}
+
+.selected-card .card-inner {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(234, 179, 8, 0.8);
+  animation: pulse 1s infinite;
+}
+
+.pulse-glow {
+  animation: pulseGlow 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1.1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.6);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(234, 179, 8, 1);
+    transform: scale(1.05);
+  }
+}
+
+/* Animated Backgrounds */
+#hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+#hero::before {
+  content: '🎈 🎉 ✨ 🎂 💝 🌟 🎁 🎊';
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.15;
+  animation: floatEmojis 25s linear infinite;
+  white-space: nowrap;
+  width: 200%;
+}
+
+@keyframes floatEmojis {
+  from { transform: translateX(-50%) translateY(100%); }
+  to { transform: translateX(-50%) translateY(-100%); }
+}
+
+/* Quiz section animated background */
+#quizSection {
+  background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+#quizSection::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: floatBubble1 8s ease-in-out infinite;
+  top: 10%;
+  left: 10%;
+}
+
+#quizSection::after {
+  content: '';
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: floatBubble2 10s ease-in-out infinite;
+  bottom: 20%;
+  right: 15%;
+}
+
+@keyframes floatBubble1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -40px); }
+}
+
+@keyframes floatBubble2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-40px, 30px); }
+}
+
+/* Magic section with stars */
+#magicSection {
+  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+#magicSection::before {
+  content: '⭐ ✨ 💫 🌟 ⭐ ✨ 💫 🌟';
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0.2;
+  animation: twinkleStars 15s linear infinite;
+  white-space: nowrap;
+  width: 200%;
+  top: 20%;
+}
+
+@keyframes twinkleStars {
+  from { transform: translateX(0); opacity: 0.2; }
+  50% { opacity: 0.4; }
+  to { transform: translateX(-50%); opacity: 0.2; }
+}
+
+/* Memory section with hearts */
+#memorySection {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+#memorySection::before {
+  content: '💝 💖 💗 💓 💝 💖 💗 💓';
+  position: absolute;
+  font-size: 2.5rem;
+  opacity: 0.15;
+  animation: floatHearts 20s linear infinite;
+  white-space: nowrap;
+  width: 200%;
+  bottom: 10%;
+}
+
+@keyframes floatHearts {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
 }
 

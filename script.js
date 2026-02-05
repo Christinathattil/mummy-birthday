@@ -108,31 +108,51 @@ $('#submitWish').addEventListener('click', () => {
 // ====== Quiz ======
 const answerKey = { q1: 'A', q2: 'C', q3: 'C' };
 
-// Q3 interactive - float correct option near wrong attempts
-const wrongOptions = $$('.option-label[data-value="A"], .option-label[data-value="B"], .option-label[data-value="D"]');
-const correctOpt = $('#correctOption');
-wrongOptions.forEach(opt => {
-  opt.addEventListener('click', (e) => {
-    e.preventDefault();
-    const rect = opt.getBoundingClientRect();
-    correctOpt.style.position = 'fixed';
-    correctOpt.style.left = rect.left + 'px';
-    correctOpt.style.top = (rect.top - 60) + 'px';
-    correctOpt.style.zIndex = '100';
-    correctOpt.style.background = '#fef08a';
-    correctOpt.style.padding = '8px';
-    correctOpt.style.borderRadius = '8px';
-    correctOpt.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
-    setTimeout(() => {
-      correctOpt.style.position = '';
-      correctOpt.style.left = '';
-      correctOpt.style.top = '';
-      correctOpt.style.zIndex = '';
-      correctOpt.style.background = '';
-      correctOpt.style.padding = '';
-      correctOpt.style.borderRadius = '';
-      correctOpt.style.boxShadow = '';
-    }, 2000);
+// Q3 Card-based interactive - always selects 3rd child
+const childCards = $$('.child-card');
+const thirdCard = $('#thirdChildCard');
+const q3Message = $('#q3Message');
+let cardAttempts = 0;
+
+childCards.forEach(card => {
+  card.addEventListener('click', (e) => {
+    const childNum = card.getAttribute('data-child');
+    
+    if (childNum === '3') {
+      // Correct choice - highlight and celebrate
+      thirdCard.classList.add('selected-card');
+      q3Message.textContent = '🎉 Of course! Everyone knows the 3rd child is the favourite!';
+      q3Message.classList.remove('hidden');
+      burstConfetti();
+    } else {
+      // Wrong choice - card shakes and refuses, then 3rd card glows
+      cardAttempts++;
+      const cardInner = card.querySelector('.card-inner');
+      cardInner.style.animation = 'shake 0.5s';
+      
+      setTimeout(() => {
+        cardInner.style.animation = '';
+      }, 500);
+      
+      // Make 3rd card pulse and glow
+      thirdCard.classList.add('pulse-glow');
+      
+      if (cardAttempts === 1) {
+        q3Message.textContent = '😅 Nice try! But that card won\'t budge...';
+      } else if (cardAttempts === 2) {
+        q3Message.textContent = '😉 The answer is glowing right in front of you!';
+      } else {
+        q3Message.textContent = '😂 Just tap the golden card already!';
+      }
+      q3Message.classList.remove('hidden');
+      
+      // Auto-select 3rd card after 3 wrong attempts
+      if (cardAttempts >= 3) {
+        setTimeout(() => {
+          thirdCard.click();
+        }, 1500);
+      }
+    }
   });
 });
 
@@ -145,8 +165,6 @@ $('#submitQuiz').addEventListener('click', () => {
   const result = $('#quizResult');
   if (score === 3) {
     result.textContent = 'Perfect! You\'re an Official Mom Expert 🏅';
-  } else if (form.get('q3') !== 'C') {
-    result.textContent = `Nice try! But we all know the 3rd child is the favourite 😉 Score: ${score}/3`;
   } else {
     result.textContent = `You got ${score}/3! Still pretty nifty.`;
   }
@@ -156,14 +174,14 @@ $('#submitQuiz').addEventListener('click', () => {
 
 // ====== Magic 8-Ball ======
 const oracleAnswers = [
-  'Mom says: More cake is always the answer!',
-  'The oracle predicts: Unlimited naps in your future!',
-  'Mom\'s wisdom: Age is just a number, cake is forever.',
-  'Signs point to: Another embarrassing story incoming!',
-  'Outlook good: You\'ll get the best hugs today!',
-  'Reply hazy: Ask again after coffee.',
-  'Mom says: Stop asking and just eat the cake!',
-  'The stars align: Dance like nobody\'s watching!',
+  'At sixty you shine, like the finest of wine! 🍷',
+  'Age is just a number, your spirit\'s still thunder! ⚡',
+  'Keep dancing through life, cut worries like a knife! 💃',
+  'You\'re strong and you\'re bold, worth more than pure gold! ✨',
+  'Laugh every day, chase the blues away! 😄',
+  'Dream big and soar, there\'s so much more in store! 🚀',
+  'Your love lights the way, brighter every day! 💖',
+  'Sixty and free, the best is yet to be! 🎉',
 ];
 const magicBall = $('#magicBall');
 const ballAnswer = $('#ballAnswer');

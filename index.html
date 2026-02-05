@@ -14,10 +14,10 @@
   <div id="balloonContainer" class="pointer-events-none fixed inset-0 overflow-hidden"></div>
   <!-- Hero -->
   <section id="hero" class="relative flex flex-col items-center justify-center min-h-screen text-center px-4">
-    <img src="assets/images/mom.jpeg" alt="Birthday portrait" class="w-48 h-48 object-cover rounded-full shadow-lg mb-6">
-    <h1 class="text-4xl font-extrabold mb-2">60 &amp; Fabulous!</h1>
-    <p id="visitorCount" class="text-lg text-gray-700 mb-4"></p>
-    <button id="startButton" class="bg-pink-500 text-white px-6 py-3 rounded-full shadow-md hover:bg-pink-600 active:scale-95 transition">Start the Celebration 🎈</button>
+    <img src="assets/images/mom.jpeg" alt="Birthday portrait" class="w-48 h-48 object-cover rounded-full shadow-lg mb-6 relative z-10">
+    <h1 class="text-4xl font-extrabold mb-2 text-white relative z-10">60 &amp; Fabulous!</h1>
+    <p id="visitorCount" class="text-lg text-white mb-4 relative z-10"></p>
+    <button id="startButton" class="bg-pink-500 text-white px-6 py-3 rounded-full shadow-md hover:bg-pink-600 active:scale-95 transition relative z-10">Start the Celebration 🎈</button>
     <div class="absolute inset-0 pointer-events-none" id="confettiCanvasContainer"></div>
   </section>
 
@@ -43,9 +43,9 @@
     <form id="quizForm" class="max-w-md mx-auto space-y-6">
       <div>
         <p class="font-semibold">1. What best describes her?</p>
-        <label class="block"><input type="radio" name="q1" value="A" class="mr-1"> Queen of sass and wisdom</label>
-        <label class="block"><input type="radio" name="q1" value="B" class="mr-1"> Professional nap enthusiast</label>
-        <label class="block"><input type="radio" name="q1" value="C" class="mr-1"> Master of embarrassing stories</label>
+        <label class="block"><input type="radio" name="q1" value="A" class="mr-1"> Forever a childish little girl at heart</label>
+        <label class="block"><input type="radio" name="q1" value="B" class="mr-1"> The best storyteller you'll ever meet</label>
+        <label class="block"><input type="radio" name="q1" value="C" class="mr-1"> A strong and inspiring soul</label>
       </div>
       <div>
         <p class="font-semibold">2. What resolution should she take?</p>
@@ -54,11 +54,36 @@
         <label class="block"><input type="radio" name="q2" value="C" class="mr-1"> Stop putting her children's ugly photos as status</label>
       </div>
       <div id="q3Container">
-        <p class="font-semibold">3. Who is her favourite child? 😏</p>
-        <label class="block option-label" data-value="A"><input type="radio" name="q3" value="A" class="mr-1"> 1st child</label>
-        <label class="block option-label" data-value="B"><input type="radio" name="q3" value="B" class="mr-1"> 2nd child</label>
-        <label id="correctOption" class="block option-label" data-value="C"><input type="radio" name="q3" value="C" class="mr-1"> 3rd child ⭐</label>
-        <label class="block option-label" data-value="D"><input type="radio" name="q3" value="D" class="mr-1"> 4th child</label>
+        <p class="font-semibold text-center mb-4">3. Who is her favourite child? 😏</p>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="child-card" data-child="1">
+            <div class="card-inner bg-gradient-to-br from-blue-200 to-blue-400 p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105">
+              <div class="text-4xl mb-2">👶</div>
+              <div class="font-bold">1st Child</div>
+            </div>
+          </div>
+          <div class="child-card" data-child="2">
+            <div class="card-inner bg-gradient-to-br from-green-200 to-green-400 p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105">
+              <div class="text-4xl mb-2">🧒</div>
+              <div class="font-bold">2nd Child</div>
+            </div>
+          </div>
+          <div class="child-card" data-child="3" id="thirdChildCard">
+            <div class="card-inner bg-gradient-to-br from-yellow-200 to-yellow-400 p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105 border-4 border-yellow-600">
+              <div class="text-4xl mb-2">⭐</div>
+              <div class="font-bold">3rd Child</div>
+              <div class="text-xs mt-1">The Favourite!</div>
+            </div>
+          </div>
+          <div class="child-card" data-child="4">
+            <div class="card-inner bg-gradient-to-br from-purple-200 to-purple-400 p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105">
+              <div class="text-4xl mb-2">👧</div>
+              <div class="font-bold">4th Child</div>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" name="q3" id="q3Input" value="C">
+        <p id="q3Message" class="text-center text-sm text-purple-600 mt-4 font-semibold hidden"></p>
       </div>
       <button type="button" id="submitQuiz" class="bg-purple-500 text-white px-4 py-2 rounded-full w-full">Lock in my genius 🧠</button>
     </form>

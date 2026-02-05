@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 60th Birthday!</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <!-- canvas confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+</head>
+<body class="bg-pink-50 text-gray-800 overflow-x-hidden">
+  <!-- Hero -->
+  <section id="hero" class="relative flex flex-col items-center justify-center min-h-screen text-center px-4">
+    <img src="assets/images/mom.jpg" alt="Birthday portrait" class="w-48 h-48 object-cover rounded-full shadow-lg mb-6">
+    <h1 class="text-4xl font-extrabold mb-4">60 &amp; Fabulous!</h1>
+    <button id="startButton" class="bg-pink-500 text-white px-6 py-3 rounded-full shadow-md hover:bg-pink-600 active:scale-95 transition">Start the Celebration 🎈</button>
+    <div class="absolute inset-0 pointer-events-none" id="confettiCanvasContainer"></div>
+  </section>
+
+  <!-- Wish carousel -->
+  <section id="wishSection" class="py-12 px-4 bg-white">
+    <h2 class="text-2xl font-bold text-center mb-1">Wish Wall</h2>
+    <p id="wishCount" class="text-center text-sm text-gray-600 mb-4"></p>
+    <div id="wishCarousel" class="text-center text-xl h-20 flex items-center justify-center mb-6"></div>
+    <div class="flex justify-center">
+      <button id="addWishBtn" class="bg-yellow-400 text-black px-4 py-2 rounded-full shadow hover:bg-yellow-500">Add my wish ✍️</button>
+    </div>
+    <!-- hidden input -->
+    <div id="wishForm" class="mt-4 hidden">
+      <input id="wishInput" type="text" maxlength="100" placeholder="Your wish (max 100 chars)" class="w-full p-2 border rounded mb-2">
+      <input id="nameInput" type="text" maxlength="30" placeholder="Your name (optional)" class="w-full p-2 border rounded mb-2">
+      <button id="submitWish" class="bg-green-500 text-white px-4 py-2 rounded-full w-full">Send 🎉</button>
+    </div>
+  </section>
+
+  <!-- Quiz -->
+  <section id="quizSection" class="py-12 px-4 bg-pink-100">
+    <h2 class="text-2xl font-bold text-center mb-4">Birthday Quiz</h2>
+    <form id="quizForm" class="max-w-md mx-auto space-y-6">
+      <div>
+        <p class="font-semibold">1. Mom’s favourite dessert?</p>
+        <label class="block"><input type="radio" name="q1" value="A" class="mr-1"> Gulab Jamun</label>
+        <label class="block"><input type="radio" name="q1" value="B" class="mr-1"> Kale Salad</label>
+      </div>
+      <div>
+        <p class="font-semibold">2. What rhymes with sixty?</p>
+        <label class="block"><input type="radio" name="q2" value="A" class="mr-1"> Nifty</label>
+        <label class="block"><input type="radio" name="q2" value="B" class="mr-1"> Python</label>
+      </div>
+      <div>
+        <p class="font-semibold">3. Best super-power she already has?</p>
+        <label class="block"><input type="radio" name="q3" value="A" class="mr-1"> Unlimited hugs</label>
+        <label class="block"><input type="radio" name="q3" value="B" class="mr-1"> X-ray vision</label>
+      </div>
+      <button type="button" id="submitQuiz" class="bg-purple-500 text-white px-4 py-2 rounded-full w-full">Lock in my genius 🧠</button>
+    </form>
+    <div id="quizResult" class="text-center text-xl font-bold mt-6 hidden"></div>
+  </section>
+
+  <!-- Gift Box -->
+  <section id="giftSection" class="py-12 px-4 bg-white text-center">
+    <h2 class="text-2xl font-bold mb-4">Swipe to Unwrap</h2>
+    <div id="giftBox" class="mx-auto w-40 h-40 bg-red-400 rounded-lg flex items-center justify-center text-5xl text-white select-none touch-pan-x">🎁</div>
+    <p id="jokeText" class="mt-4 text-lg font-semibold hidden"></p>
+  </section>
+
+  <!-- Memory Lane -->
+  <section id="memorySection" class="py-12 px-4 bg-pink-100">
+    <h2 class="text-2xl font-bold text-center mb-4">Memory Lane</h2>
+    <div class="flex space-x-4 overflow-x-auto pb-4">
+      <!-- Example cards -->
+      <div class="flip-card w-40 h-40 relative" >
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="assets/images/memory1.jpg" class="object-cover w-40 h-40 rounded-lg" alt="Memory">
+          </div>
+          <div class="flip-card-back flex items-center justify-center bg-yellow-200 w-40 h-40 rounded-lg p-2 text-center font-semibold">
+            Caption 1
+          </div>
+        </div>
+      </div>
+      <div class="flip-card w-40 h-40 relative">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="assets/images/memory2.jpg" class="object-cover w-40 h-40 rounded-lg" alt="Memory">
+          </div>
+          <div class="flip-card-back flex items-center justify-center bg-yellow-200 w-40 h-40 rounded-lg p-2 text-center font-semibold">
+            Caption 2
+          </div>
+        </div>
+      </div>
+      <!-- Add more cards as needed -->
+    </div>
+  </section>
+
+  <!-- Countdown footer -->
+  <footer class="fixed bottom-0 left-0 right-0 bg-pink-600 text-white text-center py-3">
+    <span id="countdown" class="font-bold"></span>
+  </footer>
+
+  <!-- Floating share -->
+  <button id="shareButton" class="fixed bottom-20 right-4 bg-green-500 p-4 rounded-full shadow-lg text-white text-2xl">🔗</button>
+
+  <!-- Audio -->
+  <audio id="birthdayAudio" src="assets/audio/happy_birthday.mp3"></audio>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+html {
+  scroll-behavior: smooth;
+}
+
+/* Flip-card effect */
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: inherit;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* flipped state */
+.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Swipe gift box hint */
+#giftBox {
+  cursor: grab;
+  user-select: none;
+}
+
+/* Confetti canvas container fills hero section */
+#confettiCanvasContainer canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none;
+  z-index: 50;
+}

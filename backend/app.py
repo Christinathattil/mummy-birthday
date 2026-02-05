@@ -22,7 +22,7 @@ class Wish(db.Model):
 with app.app_context():
     db.create_all()
 
-@app.route("/increment", methods=["POST"])
+@app.route("/increment", methods=["POST","OPTIONS"])
 def increment():
     db.session.add(Visitor())
     db.session.commit()
@@ -38,7 +38,7 @@ def get_wishes():
     wishes = Wish.query.order_by(Wish.created).all()
     return jsonify([{"id": w.id, "text": w.text, "name": w.name or ""} for w in wishes])
 
-@app.route("/wishes", methods=["POST"])
+@app.route("/wishes", methods=["POST","OPTIONS"])
 def add_wish():
     data = request.get_json(force=True)
     text = data.get("text", "").strip()

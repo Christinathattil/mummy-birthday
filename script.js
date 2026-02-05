@@ -32,12 +32,19 @@ if (!hasClicked) {
   visitorCountEl.textContent = `${getVisitorCount()} ${getVisitorCount() === 1 ? 'person has' : 'people have'} wished Mummy today 🤩`;
 }
 
+// Background audio
+const bgAudio = $('#birthdayAudio');
+bgAudio.loop = true;
+bgAudio.volume = 0.3;
+
 $('#startButton').addEventListener('click', () => {
   if (!sessionStorage.getItem('hasClickedStart')) {
     const count = incrementVisitors();
     visitorCountEl.textContent = `${count} ${count === 1 ? 'person has' : 'people have'} wished Mummy today 🤩`;
     sessionStorage.setItem('hasClickedStart', 'true');
   }
+  // Play background music on user interaction
+  bgAudio.play().catch(() => {});
   burstConfetti();
   document.getElementById('wishSection').scrollIntoView({ behavior: 'smooth' });
 });

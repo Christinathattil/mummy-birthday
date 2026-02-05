@@ -56,10 +56,10 @@ function loadWishes() {
     return JSON.parse(stored);
   }
   return [
-    { text: 'Wishing you decades of laughter!', name: 'Anita' },
-    { text: 'Sixty & sassy—stay that way!', name: 'Raj' },
-    { text: 'May your coffee be strong & naps long.', name: '' },
-    { text: 'To more adventures and cake! 🍰', name: 'Alex' },
+    { text: 'Here’s to many more laughs, memories, and silly moments together.', name: 'Joji' },
+    { text: 'Sixty looks good on you — keep doing you, always!', name: 'Smitha' },
+    { text: 'Life full aayitt enjoy cheyyu, health um happiness um always koode irikkatte.', name: '' },
+    { text: 'Cake kazhichu, travel poyi, stories paranju, pinne repeat — retirement agenda ready alle 😄', name: 'Laaly' },
   ];
 }
 function saveWishes() {

@@ -8,21 +8,27 @@
   <link rel="stylesheet" href="styles.css">
   <!-- canvas confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+  <!-- Lottie player -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body class="bg-pink-50 text-gray-800 overflow-x-hidden">
   <!-- Floating balloons container -->
   <div id="balloonContainer" class="pointer-events-none fixed inset-0 overflow-hidden"></div>
   <!-- Hero -->
   <section id="hero" class="relative flex flex-col items-center justify-center min-h-screen text-center px-4">
+    <!-- Lottie: Baby Mom Love -->
+    <lottie-player src="assets/lottie/baby-mom-love.json" background="transparent" speed="1" style="width:150px;height:150px;position:absolute;bottom:10%;left:5%;opacity:0.4;z-index:1;" loop autoplay></lottie-player>
     <img src="assets/images/mom.jpeg" alt="Birthday portrait" class="w-48 h-48 object-cover rounded-full shadow-lg mb-6 relative z-10">
     <h1 class="text-4xl font-extrabold mb-2 text-white relative z-10">60 &amp; Fabulous!</h1>
     <p id="visitorCount" class="text-lg text-white mb-4 relative z-10"></p>
-    <button id="startButton" class="bg-pink-500 text-white px-6 py-3 rounded-full shadow-md hover:bg-pink-600 active:scale-95 transition relative z-10">Start the Celebration 🎈</button>
+    <button id="startButton" class="bg-pink-500 text-white px-6 py-3 rounded-full shadow-md hover:bg-pink-600 active:scale-95 transition relative z-10">The Lord bless you & keep you 🫶 Happiest 60th Birthday Mummy 🥳</button>
     <div class="absolute inset-0 pointer-events-none" id="confettiCanvasContainer"></div>
   </section>
 
   <!-- Wish carousel -->
-  <section id="wishSection" class="py-12 px-4 wish-wall-bg">
+  <section id="wishSection" class="py-12 px-4 wish-wall-bg relative">
+    <!-- Lottie: Cute Bunnies Love -->
+    <lottie-player src="assets/lottie/cute-bunnies-love.json" background="transparent" speed="1" style="width:120px;height:120px;position:absolute;top:10%;right:5%;opacity:0.3;z-index:1;" loop autoplay></lottie-player>
     <h2 class="text-2xl font-bold text-center mb-1">Wish Wall</h2>
     <p id="wishCount" class="text-center text-sm text-gray-600 mb-4"></p>
     <div id="wishCarousel" class="text-center text-xl h-20 flex items-center justify-center mb-6"></div>
@@ -38,7 +44,9 @@
   </section>
 
   <!-- Quiz -->
-  <section id="quizSection" class="py-12 px-4 bg-pink-100">
+  <section id="quizSection" class="py-12 px-4 bg-pink-100 relative">
+    <!-- Lottie: Doraemon Run -->
+    <lottie-player src="assets/lottie/doraemon-run.json" background="transparent" speed="1" style="width:100px;height:100px;position:absolute;bottom:5%;left:5%;opacity:0.35;z-index:1;" loop autoplay></lottie-player>
     <h2 class="text-2xl font-bold text-center mb-4">Birthday Quiz</h2>
     <form id="quizForm" class="max-w-md mx-auto space-y-6">
       <div>
@@ -51,7 +59,7 @@
         <p class="font-semibold">2. What New Year resolution should she ACTUALLY keep?</p>
         <label class="block"><input type="radio" name="q2" value="A" class="mr-1"> Save jokes for the right moment (not during serious family discussions!)</label>
         <label class="block"><input type="radio" name="q2" value="B" class="mr-1"> Limit "photo shoot" requests to once per outing (not every 5 minutes!)</label>
-        <label class="block"><input type="radio" name="q2" value="C" class="mr-1"> Stop posting embarrassing childhood pics of us on Facebook!</label>
+        <label class="block"><input type="radio" name="q2" value="C" class="mr-1"> Stop posting embarrassing childhood pics of us on Wp Status!</label>
       </div>
       <div id="q3Container">
         <p class="font-semibold text-center mb-4">3. Who is her favourite child? 😏</p>
@@ -91,7 +99,9 @@
   </section>
 
   <!-- Magic 8-Ball -->
-  <section id="magicSection" class="py-12 px-4 bg-white text-center">
+  <section id="magicSection" class="py-12 px-4 bg-white text-center relative">
+    <!-- Lottie: Walking Shoes -->
+    <lottie-player src="assets/lottie/walking-shoes.json" background="transparent" speed="1" style="width:100px;height:100px;position:absolute;bottom:10%;right:10%;opacity:0.3;z-index:1;" loop autoplay></lottie-player>
     <h2 class="text-2xl font-bold mb-4">Ask the Birthday Oracle</h2>
     <p class="text-sm text-gray-600 mb-4">Shake your phone or tap the ball for wisdom!</p>
     <div id="magicBall" class="mx-auto w-48 h-48 bg-gradient-to-br from-purple-900 to-black rounded-full flex items-center justify-center text-white shadow-2xl cursor-pointer transition-transform hover:scale-105 active:scale-95">
@@ -103,7 +113,9 @@
   </section>
 
   <!-- Memory Lane -->
-  <section id="memorySection" class="py-12 px-4 bg-pink-100">
+  <section id="memorySection" class="py-12 px-4 bg-pink-100 relative">
+    <!-- Lottie: Snoopy Walk -->
+    <lottie-player src="assets/lottie/snoopy-walk.json" background="transparent" speed="1" style="width:120px;height:120px;position:absolute;top:10%;left:5%;opacity:0.35;z-index:1;" loop autoplay></lottie-player>
     <h2 class="text-2xl font-bold text-center mb-4">Memory Lane</h2>
     <div class="flex space-x-4 overflow-x-auto pb-4">
       <!-- Example cards -->

@@ -172,7 +172,7 @@ childCards.forEach(card => {
           }
         });
       } else {
-        q3Message.textContent = '😂 Fine, I\'ll help you... *pointing at the 3rd child card*';
+        q3Message.textContent = '😂 Fine, I\'ll help you... *look at the 3rd card😌*';
         q3Message.style.color = '#ca8a04';
         // Bounce the correct card
         thirdCard.style.animation = 'bounce 1s infinite';

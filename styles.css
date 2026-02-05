@@ -86,38 +86,6 @@ html {
   position: relative;
   overflow: hidden;
 }
-.wish-wall-bg::before {
-  content: '💝 🎂 🕷️ 🎉 🎈 ✨ 🕸️ 🎁 💐 🌟';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  font-size: 2rem;
-  opacity: 0.1;
-  white-space: nowrap;
-  animation: scrollEmojis 20s linear infinite;
-}
-.wish-wall-bg::after {
-  content: '🕷️';
-  position: absolute;
-  font-size: 4rem;
-  bottom: 10%;
-  left: 5%;
-  animation: spidermanCrawl 15s ease-in-out infinite;
-  opacity: 0.2;
-}
-
-@keyframes spidermanCrawl {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(30vw, -20px) rotate(90deg); }
-  50% { transform: translate(60vw, 10px) rotate(180deg); }
-  75% { transform: translate(30vw, -10px) rotate(270deg); }
-  100% { transform: translate(0, 0) rotate(360deg); }
-}
-@keyframes scrollEmojis {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
 
 
 /* Magic Ball Shake */
@@ -179,37 +147,6 @@ html {
   overflow: hidden;
 }
 
-#hero::before {
-  content: '🕷️ 🕸️ 🎈 🎉 ✨ 🎂 💝 🌟 🎁 🎊 🕷️ 🕸️';
-  position: absolute;
-  font-size: 3rem;
-  opacity: 0.15;
-  animation: floatEmojis 25s linear infinite;
-  white-space: nowrap;
-  width: 200%;
-}
-
-#hero::after {
-  content: '🕷️';
-  position: absolute;
-  font-size: 4rem;
-  top: 20%;
-  right: 10%;
-  animation: spidermanSwing 8s ease-in-out infinite;
-  opacity: 0.3;
-}
-
-@keyframes floatEmojis {
-  from { transform: translateX(-50%) translateY(100%); }
-  to { transform: translateX(-50%) translateY(-100%); }
-}
-
-@keyframes spidermanSwing {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(-30px, 40px) rotate(-10deg); }
-  50% { transform: translate(30px, 80px) rotate(10deg); }
-  75% { transform: translate(-20px, 40px) rotate(-5deg); }
-}
 
 /* Quiz section animated background with Tom & Jerry */
 #quizSection {
@@ -218,39 +155,6 @@ html {
   overflow: hidden;
 }
 
-#quizSection::before {
-  content: '🐭';
-  position: absolute;
-  font-size: 3rem;
-  animation: jerryRun 12s linear infinite;
-  top: 15%;
-  opacity: 0.4;
-}
-
-#quizSection::after {
-  content: '🐱';
-  position: absolute;
-  font-size: 3.5rem;
-  animation: tomChase 12s linear infinite;
-  top: 15%;
-  opacity: 0.4;
-}
-
-@keyframes jerryRun {
-  0% { left: -10%; transform: scaleX(1); }
-  48% { left: 110%; transform: scaleX(1); }
-  50% { left: 110%; transform: scaleX(-1); }
-  98% { left: -10%; transform: scaleX(-1); }
-  100% { left: -10%; transform: scaleX(1); }
-}
-
-@keyframes tomChase {
-  0% { left: -15%; transform: scaleX(1); }
-  48% { left: 105%; transform: scaleX(1); }
-  50% { left: 105%; transform: scaleX(-1); }
-  98% { left: -15%; transform: scaleX(-1); }
-  100% { left: -15%; transform: scaleX(1); }
-}
 
 
 /* Magic section with Spiderman web-slinging */
@@ -260,39 +164,6 @@ html {
   overflow: hidden;
 }
 
-#magicSection::before {
-  content: '🕷️';
-  position: absolute;
-  font-size: 3.5rem;
-  animation: spidermanFly 10s ease-in-out infinite;
-  opacity: 0.3;
-  left: 0;
-  top: 30%;
-}
-
-#magicSection::after {
-  content: '🕸️';
-  position: absolute;
-  font-size: 2rem;
-  opacity: 0.15;
-  animation: webPattern 20s linear infinite;
-  white-space: nowrap;
-  width: 200%;
-  top: 60%;
-}
-
-@keyframes spidermanFly {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(50vw, -30px) rotate(180deg); }
-  50% { transform: translate(80vw, 20px) rotate(360deg); }
-  75% { transform: translate(40vw, -20px) rotate(540deg); }
-  100% { transform: translate(0, 0) rotate(720deg); }
-}
-
-@keyframes webPattern {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
 
 
 /* Memory section with Tom & Jerry and hearts */
@@ -302,35 +173,4 @@ html {
   overflow: hidden;
 }
 
-#memorySection::before {
-  content: '💝 🐭 💖 🧀 💗 🐱 💓 💝 🐭 💖';
-  position: absolute;
-  font-size: 2.5rem;
-  opacity: 0.15;
-  animation: floatHearts 20s linear infinite;
-  white-space: nowrap;
-  width: 200%;
-  bottom: 10%;
-}
-
-#memorySection::after {
-  content: '🐱💨';
-  position: absolute;
-  font-size: 3rem;
-  top: 20%;
-  right: 10%;
-  animation: tomJump 6s ease-in-out infinite;
-  opacity: 0.25;
-}
-
-@keyframes tomJump {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  30% { transform: translateY(-50px) rotate(-15deg); }
-  60% { transform: translateY(0) rotate(0deg); }
-}
-
-@keyframes floatHearts {
-  from { transform: translateX(100%); }
-  to { transform: translateX(-100%); }
-}
 

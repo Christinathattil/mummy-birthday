@@ -1,6 +1,9 @@
 html {
   scroll-behavior: smooth;
 }
+body {
+  font-family: 'Poppins', sans-serif;
+}
 
 /* Flip-card effect */
 .flip-card {
@@ -75,9 +78,19 @@ html {
 }
 
 /* Toast */
+#toast {
+  background: linear-gradient(135deg, #fde68a 0%, #f59e0b 100%);
+  color: #4b1d03;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  transform: translateY(30px) scale(0.9);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
 #toast.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* Wish Wall Creative Background with Spiderman */

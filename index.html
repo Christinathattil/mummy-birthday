@@ -6,6 +6,7 @@
   <title>Happy 60th Birthday!</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <!-- canvas confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
   <!-- dotLottie player (supports .lottie format) -->
@@ -17,7 +18,7 @@
   <!-- Hero -->
   <section id="hero" class="relative flex flex-col items-center justify-center min-h-screen text-center px-4">
     <!-- Lottie: Baby Mom Love -->
-    <dotlottie-player src="assets/lottie/Spiderman 8bit.lottie" background="transparent" speed="1" style="width:150px;height:150px;position:absolute;bottom:10%;left:5%;opacity:0.4;z-index:1;" loop autoplay></dotlottie-player>
+    <dotlottie-player src="assets/lottie/Spiderman 8bit.lottie" background="transparent" speed="1" style="width:150px;height:150px;position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);opacity:0.4;z-index:1;" loop autoplay></dotlottie-player>
     <img src="assets/images/mom.jpeg" alt="Birthday portrait" class="w-48 h-48 object-cover rounded-full shadow-lg mb-6 relative z-10">
     <h1 class="text-4xl font-extrabold mb-2 text-white relative z-10">60 &amp; Fabulous!</h1>
     <p id="visitorCount" class="text-lg text-white mb-4 relative z-10"></p>

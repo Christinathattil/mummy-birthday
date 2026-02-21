@@ -13,7 +13,7 @@ function burstConfetti() {
 }
 
 // ====== Visitor Counter via backend ======
-const BACKEND_URL = "https://mummy-birthday-production.up.railway.app";
+const BACKEND_URL = "https://mummy-birthday-productions.up.railway.app";
 async function fetchCount() {
   try {
     const res = await fetch(`${BACKEND_URL}/count`);

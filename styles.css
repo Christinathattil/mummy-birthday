@@ -186,4 +186,33 @@ body {
   overflow: hidden;
 }
 
+/* Button pulse animations for better visibility */
+@keyframes buttonPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+  50% { transform: scale(1.05); box-shadow: 0 6px 25px rgba(0,0,0,0.3); }
+}
 
+#startButton,
+#addWishBtn,
+#submitQuiz,
+#shareButton {
+  animation: buttonPulse 2s infinite;
+}
+
+#magicBall {
+  animation: buttonPulse 2.5s infinite;
+}
+
+.flip-card {
+  animation: buttonPulse 3s infinite;
+}
+
+/* Hover states to stop animation */
+#startButton:hover,
+#addWishBtn:hover,
+#submitQuiz:hover,
+#shareButton:hover,
+#magicBall:hover,
+.flip-card:hover {
+  animation: none;
+}

@@ -62,37 +62,11 @@
         <label class="block"><input type="radio" name="q2" value="B" class="mr-1"> Limit "photo shoot" requests to once per outing (not every 5 minutes!)</label>
         <label class="block"><input type="radio" name="q2" value="C" class="mr-1"> Stop posting embarrassing childhood pics of her children on Wp Status!</label>
       </div>
-      <div id="q3Container">
-        <p class="font-semibold text-center mb-4">3. Who is her favourite child? 😏</p>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="child-card" data-child="1">
-            <div class="card-inner bg-gradient-to-br from-blue-200 to-blue-400 p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105">
-              <div class="text-4xl mb-2">👶</div>
-              <div class="font-bold">1st Child</div>
-            </div>
-          </div>
-          <div class="child-card" data-child="2">
-            <div class="card-inner bg-gradient-to-br from-green-200 to-green-400 p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105">
-              <div class="text-4xl mb-2">🧒</div>
-              <div class="font-bold">2nd Child</div>
-            </div>
-          </div>
-          <div class="child-card" data-child="3" id="thirdChildCard">
-            <div class="card-inner bg-gradient-to-br from-yellow-200 to-yellow-400 p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105 border-4 border-yellow-600">
-              <div class="text-4xl mb-2">⭐</div>
-              <div class="font-bold">3rd Child</div>
-              <div class="text-xs mt-1">The Favourite!</div>
-            </div>
-          </div>
-          <div class="child-card" data-child="4">
-            <div class="card-inner bg-gradient-to-br from-purple-200 to-purple-400 p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105">
-              <div class="text-4xl mb-2">👧</div>
-              <div class="font-bold">4th Child</div>
-            </div>
-          </div>
-        </div>
-        <input type="hidden" name="q3" id="q3Input" value="C">
-        <p id="q3Message" class="text-center text-sm text-purple-600 mt-4 font-semibold hidden"></p>
+      <div>
+        <p class="font-semibold">3. If Mummy's 60 years were a movie, what genre would it be?</p>
+        <label class="block"><input type="radio" name="q3" value="A" class="mr-1"> Action-Adventure (always on the move!)</label>
+        <label class="block"><input type="radio" name="q3" value="B" class="mr-1"> Comedy (laughter in every scene)</label>
+        <label class="block"><input type="radio" name="q3" value="C" class="mr-1"> Epic Drama (full of unforgettable moments)</label>
       </div>
       <button type="button" id="submitQuiz" class="bg-purple-500 text-white px-4 py-2 rounded-full w-full">Lock in my genius 🧠</button>
     </form>
@@ -104,7 +78,8 @@
     <!-- Lottie: Walking Shoes -->
     <dotlottie-player src="assets/lottie/cat walking.lottie" background="transparent" speed="1" style="width:120px;height:120px;position:absolute;bottom:10%;right:2%;opacity:0.35;z-index:1;" loop autoplay></dotlottie-player>
     <h2 class="text-2xl font-bold mb-4">Ask the Birthday Oracle</h2>
-    <p class="text-sm text-gray-600 mb-4">Shake your phone or tap the ball to see what Mummy wants to say to you!</p>
+    <p class="text-sm text-gray-600 mb-2">👆 <strong>Tap the ball below</strong> or shake your phone!</p>
+    <p class="text-xs text-gray-500 mb-4">See what Mummy wants to say to you 💜</p>
     <div id="magicBall" class="mx-auto w-48 h-48 bg-gradient-to-br from-purple-900 to-black rounded-full flex items-center justify-center text-white shadow-2xl cursor-pointer transition-transform hover:scale-105 active:scale-95">
       <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-300 rounded-full flex items-center justify-center">
         <span id="ballAnswer" class="text-xs font-bold text-center px-2">8</span>
@@ -117,7 +92,8 @@
   <section id="memorySection" class="py-12 px-4 bg-pink-100 relative">
     <!-- Lottie: Snoopy Walk -->
     <dotlottie-player src="assets/lottie/Orange skating.lottie" background="transparent" speed="1" style="width:120px;height:120px;position:absolute;top:10%;left:5%;opacity:0.35;z-index:1;" loop autoplay></dotlottie-player>
-    <h2 class="text-2xl font-bold text-center mb-4">Memory Lane</h2>
+    <h2 class="text-2xl font-bold text-center mb-2">Memory Lane</h2>
+    <p class="text-sm text-gray-600 text-center mb-4">👆 <strong>Tap each photo</strong> to flip and see the memory!</p>
     <div class="flex space-x-4 overflow-x-auto pb-4">
       <!-- Example cards -->
       <div class="flip-card w-40 h-40 relative" >

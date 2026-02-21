@@ -50,34 +50,6 @@ def add_wish():
     db.session.commit()
     return jsonify({"id": wish.id, "text": wish.text, "name": wish.name or ""}), 201
 
-# ==== Admin-only wish management (backend only) ====
-@app.route("/admin/wishes/<int:wish_id>", methods=["PUT"])
-def edit_wish(wish_id):
-    wish = Wish.query.get_or_404(wish_id)
-    data = request.get_json(force=True)
-    
-    # Update text if provided
-    if "text" in data:
-        new_text = data["text"].strip()
-        if not new_text:
-            return jsonify({"error": "text cannot be empty"}), 400
-        wish.text = new_text[:200]
-    
-    # Update name if provided (can be empty string)
-    if "name" in data:
-        new_name = data["name"].strip()
-        wish.name = new_name[:60] if new_name else None
-    
-    db.session.commit()
-    return jsonify({"id": wish.id, "text": wish.text, "name": wish.name or ""})
-
-@app.route("/admin/wishes/<int:wish_id>", methods=["DELETE"])
-def delete_wish(wish_id):
-    wish = Wish.query.get_or_404(wish_id)
-    db.session.delete(wish)
-    db.session.commit()
-    return jsonify({"message": f"Wish {wish_id} deleted successfully"})
-
 import os
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

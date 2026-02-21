@@ -14,26 +14,42 @@ function burstConfetti() {
 
 // ====== Visitor Counter via backend ======
 const BACKEND_URL = "https://mummy-birthday-production.up.railway.app";
-async function fetchCount() {
-  try {
-    const res = await fetch(`${BACKEND_URL}/count`, { 
-      signal: AbortSignal.timeout(5000) 
-    });
-    if (!res.ok) throw new Error('Network response was not ok');
-    const { count } = await res.json();
-    return count;
-  } catch (e) {
-    console.error("Count fetch failed", e);
-    return -1; // Return -1 to indicate error
+
+async function fetchWithRetry(url, options = {}, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      const res = await fetch(url, { ...options, signal: controller.signal });
+      clearTimeout(timeout);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res;
+    } catch (e) {
+      console.warn(`Attempt ${i + 1}/${retries} failed:`, e.message);
+      if (i === retries - 1) throw e;
+      await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+    }
   }
 }
-async function incrementVisitors() {
+
+async function fetchCount() {
   try {
-    const res = await fetch(`${BACKEND_URL}/increment`, { method: "POST" });
+    const res = await fetchWithRetry(`${BACKEND_URL}/count`);
     const { count } = await res.json();
     return count;
   } catch (e) {
-    console.error("Increment failed", e);
+    console.error("Count fetch failed after retries", e);
+    return 0;
+  }
+}
+
+async function incrementVisitors() {
+  try {
+    const res = await fetchWithRetry(`${BACKEND_URL}/increment`, { method: "POST" });
+    const { count } = await res.json();
+    return count;
+  } catch (e) {
+    console.error("Increment failed after retries", e);
     return null;
   }
 }
@@ -42,12 +58,7 @@ async function incrementVisitors() {
 const visitorCountEl = $('#visitorCount');
 (async () => {
   const cnt = await fetchCount();
-  if (cnt === -1) {
-    visitorCountEl.textContent = '⏳ Loading wishes... (if this persists, check your internet connection)';
-    visitorCountEl.style.fontSize = '0.9rem';
-  } else {
-    visitorCountEl.textContent = `${cnt} ${cnt === 1 ? "person has" : "people have"} wished Mummy today 🤩`;
-  }
+  visitorCountEl.textContent = `${cnt} ${cnt === 1 ? "person has" : "people have"} wished Mummy today 🤩`;
 })();
 let hasClicked = sessionStorage.getItem('hasClickedStart');
 

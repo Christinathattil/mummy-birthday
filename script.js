@@ -13,7 +13,7 @@ function burstConfetti() {
 }
 
 // ====== Visitor Counter via backend ======
-const BACKEND_URL = "https://mummy-birthday-production.up.railway.app";
+const BACKEND_URL = "https://misty-boat-df06.christinajosthattil.workers.dev";
 
 async function fetchWithRetry(url, options = {}, retries = 3) {
   for (let i = 0; i < retries; i++) {

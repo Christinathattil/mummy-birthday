@@ -16,12 +16,15 @@ function burstConfetti() {
 const BACKEND_URL = "https://mummy-birthday-production.up.railway.app";
 async function fetchCount() {
   try {
-    const res = await fetch(`${BACKEND_URL}/count`);
+    const res = await fetch(`${BACKEND_URL}/count`, { 
+      signal: AbortSignal.timeout(5000) 
+    });
+    if (!res.ok) throw new Error('Network response was not ok');
     const { count } = await res.json();
     return count;
   } catch (e) {
-    console.error("Count fetch failed, fallback to 0", e);
-    return 0;
+    console.error("Count fetch failed", e);
+    return -1; // Return -1 to indicate error
   }
 }
 async function incrementVisitors() {
@@ -39,7 +42,12 @@ async function incrementVisitors() {
 const visitorCountEl = $('#visitorCount');
 (async () => {
   const cnt = await fetchCount();
-  visitorCountEl.textContent = `${cnt} ${cnt === 1 ? "person has" : "people have"} wished Mummy today 🤩`;
+  if (cnt === -1) {
+    visitorCountEl.textContent = '⏳ Loading wishes... (if this persists, check your internet connection)';
+    visitorCountEl.style.fontSize = '0.9rem';
+  } else {
+    visitorCountEl.textContent = `${cnt} ${cnt === 1 ? "person has" : "people have"} wished Mummy today 🤩`;
+  }
 })();
 let hasClicked = sessionStorage.getItem('hasClickedStart');
 
